@@ -35,29 +35,29 @@ async function run() {
       res.send(result);
     });
 
-    // app.put("/product/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const newQuantity = req.body;
-    //   const filter = { _id: ObjectId(id) };
-    //   const options = { upsert: true };
-    //   const updateDoc = {
-    //     $set: {
-    //       quantity: newQuantity.quantity,
-    //     },
-    //   };
-    //   const result = await productCollection.updateOne(
-    //     updateDoc,
-    //     filter,
-    //     options
-    //   );
-    //   res.send(result);
-    // });
+    app.put("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      const newQuantity = req.body;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          quantity: newQuantity.quantity,
+        },
+      };
+      const result = await productCollection.updateOne(
+        updateDoc,
+        filter,
+        options
+      );
+      res.send(result);
+    });
 
-    // app.post("/product", async (req, res) => {
-    //   const newProduct = req.body;
-    //   const result = await productCollection.insertOne(newProduct);
-    //   res.send(result);
-    // });
+    app.post("/product", async (req, res) => {
+      const newProduct = req.body;
+      const result = await productCollection.insertOne(newProduct);
+      res.send(result);
+    });
 
     app.delete("/product/:id", async (req, res) => {
       const id = req.params.id;
@@ -70,6 +70,12 @@ async function run() {
       const query = {};
       const cursor = reviewCollection.find(query);
       const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.post("/review/:id", async (req, res) => {
+      const newProduct = req.body;
+      const result = await reviewCollection.insertOne(newProduct);
       res.send(result);
     });
   } finally {
